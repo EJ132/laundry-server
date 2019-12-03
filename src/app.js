@@ -4,6 +4,8 @@ const morgan = require('morgan')
 const cors = require('cors')
 const helmet = require('helmet')
 const { NODE_ENV } = require('./config')
+const AuthRouter = require('./auth/auth-router')
+const UserRouter = require('./users/user-router')
 
 const app = express()
 
@@ -12,11 +14,11 @@ const morganOption = (NODE_ENV === 'production')
   : 'common';
 
 app.use(morgan(morganOption))
+app.use(cors())
 app.use(helmet())
 
-app.get('/', (req, res) => {
-       res.send('Hello, boilerplate!')
-    })
+app.use('/api/auth', AuthRouter)
+app.use('/api/users', UserRouter)
 
 app.use(function errorHandler(error, req, res, next) {
        let response
@@ -28,7 +30,5 @@ app.use(function errorHandler(error, req, res, next) {
        }
        res.status(500).json(response)
      })
-
-app.use(cors())
 
 module.exports = app
