@@ -9,8 +9,8 @@ const UsersService = require('./user-service')
 
 userRouter
   .post('/', jsonBodyParser, (req, res, next) => {
-    const { password, user_name, fullname } = req.body
-    for (const field of ['fullname', 'user_name', 'password'])
+    const { password, user_name, full_name, email } = req.body
+    for (const field of ['full_name', 'user_name', 'password', 'email'])
        if (!req.body[field])
          return res.status(400).json({
            error: `Missing '${field}' in request body`

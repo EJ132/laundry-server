@@ -42,8 +42,9 @@ const UsersService = {
     serializeUser(user) {
       return {
         id: user.id,
-        fullname: xss(user.fullname),
-        user_name: xss(user.user_name)
+        full_name: xss(user.full_name),
+        user_name: xss(user.user_name),
+        email: xss(user.email)
       }
     },
 
