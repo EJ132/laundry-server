@@ -29,12 +29,22 @@ userRouter
         if (hasUserWithUserName)
           return res.status(400).json({ error: `Username already taken` })
 
+    UsersService.hasUserWithEmail(
+      req.app.get('db'),
+      email
+    )
+      .then(hasUserWithEmail => {
+        if(hasUserWithEmail)
+          return res.status(400).json({error: `Email already in use!`})
+      })
+
     return UsersService.hashPassword(password)
         .then(hashedPassword => {
             const newUser = {
                 user_name,
                 password: hashedPassword,
-                fullname
+                full_name,
+                email
             }
 
             return UsersService.insertUser(
